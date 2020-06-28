@@ -1,5 +1,6 @@
 from io import BytesIO
 from datetime import datetime
+from pytz import timezone
 from relatorio.templates.opendocument import Template
 
 
@@ -22,7 +23,8 @@ class DocumentWorker:
             basic = Template(source=self.template, filepath='')
             basic_generated = basic.generate(json=self.data).render()
             document = BytesIO(basic_generated.getvalue())
-            now_date = datetime.strftime(datetime.now(), "%d%m%Y:%H%M%S")
+            time_zone = timezone('Europe/Moscow')
+            now_date = datetime.strftime(datetime.now(time_zone), "%d%m%Y:%H%M%S")
             filename = f'{template_name}{now_date}.{self.ext}'
             return document, filename
         else:
