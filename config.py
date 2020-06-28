@@ -1,3 +1,3 @@
 class Configuration(object):
-    DEBUG = True
+    DEBUG = False
     SECRET_KEY = 'Hello there General Kenobi'
