@@ -23,9 +23,13 @@ class DocumentWorker:
             basic = Template(source=self.template, filepath='')
             basic_generated = basic.generate(json=self.data).render()
             document = BytesIO(basic_generated.getvalue())
-            time_zone = timezone('Europe/Moscow')
-            now_date = datetime.strftime(datetime.now(time_zone), "%d%m%Y:%H%M%S")
-            filename = f'{template_name}{now_date}.{self.ext}'
+            filename = self.new_filename(template_name)
             return document, filename
         else:
             raise DocumentWorkerException('Incorrect extension!')
+
+    def new_filename(self, name):
+        """Generates new filename with current moscow datetime"""
+        time_zone = timezone('Europe/Moscow')
+        now_date = datetime.strftime(datetime.now(time_zone), "%d%m%Y:%H%M%S")
+        return f'{name}{now_date}.{self.ext}'

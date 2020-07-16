@@ -21,5 +21,5 @@ def document():
         return jsonify({'message': 'Not enough JSON params!'}), 400
     except (json.decoder.JSONDecodeError, UnicodeDecodeError):
         return jsonify({'message': 'Incorrect JSON file data!'}), 400
-    except Exception:
+    except Exception:   # sometimes relatorio throws exception with base exception class
         return jsonify({'message': 'Incorrect template format!'}), 400
