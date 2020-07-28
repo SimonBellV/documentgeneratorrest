@@ -3,12 +3,9 @@ from datetime import datetime
 from pytz import timezone
 from relatorio.templates.opendocument import Template
 
-
 ALLOWED_EXTENSIONS = ['odt', 'ods', 'odp']
 
-
 class DocumentWorkerException(Exception): pass
-
 
 class DocumentWorker:
     def __init__(self, template, ext: str, data: dict):
@@ -21,7 +18,7 @@ class DocumentWorker:
         template_name, template_ext = self.template.filename.split('.', 1)
         if self.ext == template_ext and self.ext in ALLOWED_EXTENSIONS:
             basic = Template(source=self.template, filepath='')
-            basic_generated = basic.generate(json=self.data).render()
+            basic_generated = basic.generate(o=self.data).render()
             document = BytesIO(basic_generated.getvalue())
             filename = self.new_filename(template_name)
             return document, filename
